@@ -8,11 +8,6 @@ const studentSchema = Yup.object().shape({
     name: Yup
         .string()
         .required(),
-    id: Yup
-        .number()
-        .required()
-        .positive()
-        .integer(),
     ra: Yup
         .string()
         .required(),
