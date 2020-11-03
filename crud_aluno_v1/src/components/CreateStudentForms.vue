@@ -162,11 +162,16 @@ export default {
         .catch(err => {
           this.error =true;
           //create a handler with an approach for de error.
-          console.log(err.response.data.errors);
+          
           let errorsRequest = err.response.data.errors;
-          this.mensageError = errorsRequest.reduce((current, next, idx) => {
-            return idx == 0 ? current.id : next + ', ' + current.id;
+          console.log(errorsRequest);
+          let arrayError = [''];
+          arrayError.push(Object.values(errorsRequest))
+
+          this.mensageError = arrayError.reduce((current, next, idx) => {
+            return idx == 0 ? current : next + ', ' + current;
           },'');
+          console.log(this.mensageError)
         });
 
         this.$refs.form.reset()    
