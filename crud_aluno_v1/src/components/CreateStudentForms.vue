@@ -165,7 +165,7 @@ export default {
           console.log(err.response.data.errors);
           let errorsRequest = err.response.data.errors;
           this.mensageError = errorsRequest.reduce((current, next, idx) => {
-            return idx == 0 ? current.id : next + ', ' + currVal.id;
+            return idx == 0 ? current.id : next + ', ' + current.id;
           },'');
         });
 
