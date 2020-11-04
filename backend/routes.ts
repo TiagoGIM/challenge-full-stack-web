@@ -9,5 +9,8 @@ routes.get('/student/:id',StudentController.show);
 
 routes.post('/student',StudentController.create);
 
+routes.delete('/student/:id',StudentController.deleteStudent);
+
+routes.put('/student/:id',StudentController.deleteStudent);
 
 export default routes;

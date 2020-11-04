@@ -12,15 +12,22 @@
     app
     color="green"
     >
-      <div class="text-center pt-5" style = "color : white">
-          <h3>MÓDULO ACADÊMICO</h3>
-      </div>
-
+      <template v-slot:prepend>
+        <v-list-item >
+          <v-list-item-content>
+            <div class="text-center pt-5" style = "color : white">
+              <h4>MÓDULO ACADÊMICO</h4>
+            </div>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+      <v-divider></v-divider>
     </v-navigation-drawer>
+
     <v-main>
       <v-container >
         <router-view/>            
-       </v-container>
+      </v-container>
     </v-main>
   </v-app>
 </template>

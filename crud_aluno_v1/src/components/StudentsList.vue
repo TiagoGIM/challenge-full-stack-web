@@ -44,14 +44,11 @@
             <h5> {{student.ra}} </h5>
           </v-card-text>
           <v-card-actions>
-              <v-btn @click="deleteDialog = false">CANCELAR</v-btn>
-              <v-btn @click="deleteDialog=false">DELETAR</v-btn>
+              <v-btn @click="deleteDialog= false">CANCELAR</v-btn>
+              <v-btn @click="removeStudent">DELETAR</v-btn>
           </v-card-actions>
       </v-card>
     </v-dialog>
-
-
-
   </v-card>
 </template>
 
@@ -98,12 +95,15 @@ export default {
     showDeleteDialog(student){
       this.student = student;
       this.deleteDialog=true;
-    },
-    
+    },    
     removeStudent() {
         DataService.delete(this.student.id).then(() => {
-            alert('removido com sucesso');
-            this.getList()
+          alert('removido com sucesso');
+          this.deleteDialog=false
+          this.getList()
+        })
+        .catch(err=>{
+          alert("some error",err);
         });
     },
     getList(){
@@ -111,10 +111,9 @@ export default {
 
         this.users= res.data
 
-
         console.log(this.users)
-      }).
-      catch(err=>{
+      })
+      .catch(err=>{
         console.log(err);
       })
       
