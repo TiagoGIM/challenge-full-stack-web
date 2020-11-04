@@ -1,6 +1,6 @@
 <template>
   <div class="register">
-    <CreateStudentForms/>
+    <CreateStudentForms :student="student"/>
   </div>
 </template>
 
@@ -8,7 +8,13 @@
   import CreateStudentForms from '@/components/CreateStudentForms.vue'
 
   export default {
+
     name: 'Register',
+
+    props : {
+      student : Object,
+      },
+      
     components: {
       CreateStudentForms,
     },

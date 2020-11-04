@@ -16,7 +16,6 @@
   <v-form
     ref="form"
     v-model="valid"
-
   >
     <v-text-field
       v-model="newStudent.name"
@@ -32,7 +31,7 @@
       :counter="10"
       :rules="raRules"
       label="RA"
-      :readonly="newStudent.id !== null"
+      :readonly="editMode"
       placeholder="Informe o registro acadêmico"
       outlined
     ></v-text-field>
@@ -42,7 +41,7 @@
       :counter="9"
       :rules="cpfRules"
       label="CPF"
-      :readonly="newStudent.id !== null"
+      :readonly="editMode"
       placeholder="Informe o número do CPF"
       outlined
       required
@@ -63,15 +62,6 @@
    flat
    >
     <v-btn
-      class="mr-6"
-      color="red lighten-5"      
-      fab
-      large
-      @click="reset"
-    >
-      <v-icon>mdi-undo-variant</v-icon> 
-    </v-btn>
-    <v-btn
     
       fab
       dark
@@ -88,7 +78,7 @@
       color="success"
       large
       class="mr-6"
-      @click="createStudent"
+      @click="saveStudent"
     >
       <v-icon 
       color = "deep-green lighten-5"
@@ -109,8 +99,6 @@ export default {
   props:
   { 
     student: Object,
-    type: String,
-    readonly: Boolean
   },
   
   componentes: {
@@ -118,26 +106,22 @@ export default {
   },
   data: () => ({
     valid: false,
-    name: '',
+    editMode:false,
     nameRules: [
       v => !!v || 'Name is required',
     ],
-    cpf:'',
     cpfRules:[
       v => !!v || 'CPF is required',
       v => (v && v.length >= 9) || 'CPF must be less than 9 characters',
     ],
-    ra:'',
     raRules:[
       v => !!v || 'RA is required',
       v => (v && v.length >= 9) || 'RA must be less than 9 characters',
     ],
-    email: '',
     emailRules: [
       v => !!v || 'E-mail is required',
       v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
     ],
-
     newStudent : {
           id: null,
           name : null,
@@ -149,12 +133,24 @@ export default {
     error : false,
     mensageError:"",
   }),
+  async created(){
+//prepear student for editing operation.
+    if (this.student) {
+      this.newStudent.id = this.student.id;
+      this.newStudent.name = this.student.name;
+      this.newStudent.email = this.student.email;
+      this.newStudent.ra = this.student.ra;
+      this.newStudent.cpf = this.student.cpf;
+      this.editMode = true;
+    }
+  },
 
   methods: {
+    saveStudent(){
+      this.editMode ? this.updateStudant() : this.createStudent() ;
+    },
     createStudent () {      
-      //this.$refs.form.validate()
-
-  
+      //this.$refs.form.validate()  
         DataService.create(this.newStudent).then(res => {
           console.log(res.data);
           this.success=true;
@@ -177,13 +173,23 @@ export default {
         this.$refs.form.reset()    
 
     },
+    updateStudant(){
+      DataService.update(this.newStudent.id, this.newStudent).then(response => {
+          console.log(response.data);
+          this.success=true;
+          this.$router.push("/");
+        })
+        .catch(err => {
+          console.log(err);
+          alert(err)
+        });
+    },
     reset () {
       this.$refs.form.reset()
-      this.$router.push("/");
-
     },
     resetValidation () {
       this.$refs.form.resetValidation()
+      this.$router.push("/");
     },
   },
 }
