@@ -147,7 +147,7 @@ export default {
 
   methods: {
     saveStudent(){
-      this.editMode ? this.updateStudant() : this.createStudent() ;
+      this.editMode ? this.updateStedant() : this.createStudent() ;
     },
     createStudent () {      
       //this.$refs.form.validate()  
@@ -173,7 +173,7 @@ export default {
         this.$refs.form.reset()    
 
     },
-    updateStudant(){
+    updateStudent(){
       DataService.update(this.newStudent.id, this.newStudent).then(response => {
           console.log(response.data);
           this.success=true;

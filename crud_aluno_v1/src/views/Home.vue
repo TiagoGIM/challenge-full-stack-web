@@ -1,11 +1,14 @@
 <template>
   <v-container>
-
+    <v-app-bar
+      app
+      color="red"
+      dark
+    >
+    <h2>Listagem de aluno</h2>
+    </v-app-bar>
     <StudentList/>
-    <template v-slot:top>
-    </template>
-
-    </v-container>
+  </v-container>
 </template>
 
 <script>
