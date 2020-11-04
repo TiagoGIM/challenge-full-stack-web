@@ -35,7 +35,7 @@ export default{
       });
 
     await studentRepository.save(stundent);
-  return response.status(201).json({m:'try save'})
+  return response.status(201).json({message:'sucess'})
 
   },
   async show(request:Request, response:Response){
