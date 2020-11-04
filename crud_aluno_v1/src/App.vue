@@ -1,13 +1,5 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="red"
-      dark
-    >
-    <h2>Title</h2>
-    </v-app-bar>
-
     <v-navigation-drawer
     app
     color="green"

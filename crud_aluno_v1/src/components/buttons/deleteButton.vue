@@ -14,6 +14,7 @@
         color="error"
         v-bind="attrs"
         v-on="on"
+        @click="deleteEvent"
       >
         <v-icon>mdi-account-remove</v-icon>
       </v-btn>
@@ -25,9 +26,28 @@
 
 <script>
 
+import store from '@/store'
+
 export default{
-    name:'BtnDelStudant',
+  name:'BtnDelete',
+  props:
+  { 
+    student: Object,
+  },  
+  componentes: {
+//    SucessOperation,
+  },
+  methods:{
+    deleteEvent(){
+      const forDelete = {      
+        student : this.student,
+        deleteAction : true,
+      }
+      //trigger a event in the store three
+      store.commit('deleteStudent',forDelete);
+    }
   }
+}
 
 </script>
 

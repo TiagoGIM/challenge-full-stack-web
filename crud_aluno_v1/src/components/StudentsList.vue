@@ -1,7 +1,6 @@
   <template>
   <v-card elevation="1">
     <v-card-title>
-
       <v-text-field
         v-model="search"
         append-icon="mdi-account-search"
@@ -30,21 +29,24 @@
       :search="search"
     >
       <template v-slot:item.action="{item}">
-      <!-- <BtnEditStudant/><BtnDelStudant/> -->
-      <v-btn
-      @click="showDeleteDialog(item)"
-      >delete  {{ item.id }}   </v-btn>
+        <BtnEdit :student="item" /><!-- <BtnDelStudant key="{{item.id}}"/> -->
+        <BtnDelete :student="item"/> 
       </template>   
     </v-data-table>
 
-    <v-dialog width="600" v-model="deleteDialog">
+    <v-dialog width="600"  v-model="showof">
       <v-card width="600">
           <v-card-text>
-            <h3> {{student.name}} </h3>
-            <h5> {{student.ra}} </h5>
+            <h2>Deseja excluir o Aluno: </h2>
+            <h3>Nome: {{student.name}} </h3>
+            <h2> e as informações : </h2>
+            <h4> Email : {{student.email}} </h4>
+            <h4> CPF : {{student.cpf}} </h4>
+            <h4>Registro Acadêmico: {{student.ra}} </h4>
+            <h2>Do sistema </h2>
           </v-card-text>
           <v-card-actions>
-              <v-btn @click="deleteDialog= false">CANCELAR</v-btn>
+              <v-btn @click="abort">CANCELAR</v-btn>
               <v-btn @click="removeStudent">DELETAR</v-btn>
           </v-card-actions>
       </v-card>
@@ -53,20 +55,22 @@
 </template>
 
 <script>
-  import DataService from '../services/DataService.js';
-  //import BtnDelStudant from './buttons/BtnDelStudant.vue'
-  //import BtnEditStudant from './buttons/editButton.vue'
-
+  import DataService from '@/services/DataService.js';
+  import BtnDelete from './buttons/deleteButton.vue'
+  import BtnEdit from './buttons/editButton.vue'
+  import store from '@/store';
 
 export default {
   name: 'StudentList',
     components: {
-      //BtnDelStudant,
-      //BtnEditStudant,
+    BtnDelete,
+    BtnEdit,
     },
   data()
   {
      return {
+       sharedData : store.state.deleteStudent,
+       showof:false,
        search: '',
        headers : [
         {
@@ -92,14 +96,15 @@ export default {
       };
   },
   methods : {
-    showDeleteDialog(student){
-      this.student = student;
-      this.deleteDialog=true;
-    },    
+    editStudent(studentCurrent){
+      this.$router.push({
+        name: 'Edit',
+        params : { student: studentCurrent }
+        });
+    },
     removeStudent() {
         DataService.delete(this.student.id).then(() => {
-          alert('removido com sucesso');
-          this.deleteDialog=false
+          this.showof=false
           this.getList()
         })
         .catch(err=>{
@@ -117,10 +122,32 @@ export default {
         console.log(err);
       })
       
+    },
+    abort(){
+      this.showof = false;
+      this.student = {
+          id: null,
+          name : null,
+          cpf: null,
+          ra:null,
+          email:null,
+        };
+        store.commit('deleteAbort');
     }
   },
   mounted(){
-    this.getList()
+  store.subscribe((mutation) => {
+      const trigger = mutation.type;
+      const state = mutation.payload;
+      if(trigger==='deleteAbort'){
+        console.log(this.sharedData);
+      }
+      if(trigger==='deleteStudent'){
+        this.student = state.student;
+        this.showof=state.deleteAction;
+      }
+    });
+    this.getList();
   }
 }
 </script>
