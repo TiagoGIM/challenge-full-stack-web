@@ -11,6 +11,6 @@ routes.post('/student',StudentController.create);
 
 routes.delete('/student/:id',StudentController.deleteStudent);
 
-routes.put('/student/:id',StudentController.deleteStudent);
+routes.put('/student/:id',StudentController.update);
 
 export default routes;

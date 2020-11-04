@@ -16,26 +16,24 @@ export default{
 
   },
   async create(request:Request, response:Response){
-    const {
-        name,
-        email,
-        cpf,
-        ra
-    } = request.body;
+
+    const { name, email, cpf, ra } = request.body;
 
     const studentRepository = getRepository(StudentEntity);
   // validating about data from client
     await studentSchema.validate(
-      { name,email,cpf,ra },
-      {abortEarly:false}
+      {
+        name,email,cpf,ra
+      },
+      {
+        abortEarly:false
+      },
     );
+    const stundent = studentRepository.create(
+      {
+        name, email, cpf, ra,
+      });
 
-    const stundent = studentRepository.create({
-        name,
-        email,
-        cpf,
-        ra
-    });
     await studentRepository.save(stundent);
   return response.status(201).json({m:'try save'})
 
@@ -61,17 +59,16 @@ export default{
     return response.status(200).json(results);    
   },
   async update(request:Request, response:Response){
+      const { id } = request.params;
 
-    const { id } = request.params;
+      const studentRepository = getRepository(StudentEntity);
+  
+      const student = await studentRepository.findOneOrFail(id)
 
-    const studentRepository = getRepository(StudentEntity);
+      studentRepository.merge(student, request.body);
 
-    const stundent = await studentRepository.findOneOrFail(id)
-
-    studentRepository.merge(stundent, request.body);
-
-    const results = await studentRepository.save(stundent);
-
-    return response.status(200).send(results);
+      const results = await studentRepository.save(student);
+  
+      return response.status(200).send(results);
   }
 }
