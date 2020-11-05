@@ -28,7 +28,7 @@
 import store from '@/store'
 
 export default{
-  name:'BtnDelete',
+  name:'deleteBtn',
   props:
   { 
     student: Object,
