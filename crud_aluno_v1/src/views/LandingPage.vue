@@ -1,28 +1,21 @@
 <template>
   <v-container>
   <layoutPages :title ="title"/>
-    <CreateStudentForms :student="student"/>
+  <h1> BEM-VINDO !</h1>
   </v-container>
 </template>
 
 <script>
-  import CreateStudentForms from '@/components/CreateStudentForms.vue'
   import layoutPages from '@/views/layoutPage'
 
   export default {
-    name: 'Register',
+    name: 'home',
     data(){
       return {
-      title:"CADASTRO DE ALUNO",
+      title:"MODULO ACADÊMICO",
       }
     },
-
-    props : {
-      student : Object,
-      },
-      
     components: {
-      CreateStudentForms,
       layoutPages,
     },
   }

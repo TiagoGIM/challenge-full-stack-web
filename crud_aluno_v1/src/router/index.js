@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import FindStudent from '@/views/FindStudent.vue'
+import LandingPage from '@/views/LandingPage.vue'
 
 
 Vue.use(VueRouter)
@@ -8,8 +9,13 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
+    name: 'home',
+    component: LandingPage
+  },
+  {
+    path: '/find-student',
+    name: 'FindStudent',
+    component: FindStudent
   },
   {
     path: '/register',

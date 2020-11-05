@@ -62,7 +62,20 @@
    flat
    >
     <v-btn
-    
+      :disabled="!valid"
+      fab
+      color="success"
+      large
+      
+      @click="saveStudent"
+    >
+      <v-icon 
+      color = "deep-green lighten-5"
+      >mdi-content-save</v-icon>
+    </v-btn>
+
+    <v-btn
+      class="mr-6"
       fab
       dark
       large
@@ -72,18 +85,7 @@
     >
       <v-icon>mdi-close</v-icon>      
     </v-btn>
-    <v-btn
-      :disabled="!valid"
-      fab
-      color="success"
-      large
-      class="mr-6"
-      @click="saveStudent"
-    >
-      <v-icon 
-      color = "deep-green lighten-5"
-      >mdi-content-save</v-icon>
-    </v-btn>
+  
   </v-card>
   </v-form>
 </div>
@@ -91,7 +93,6 @@
 
 <script>
 import DataService from '@/services/DataService.js';
-//import SucessOperation from './dialogs/SucessOperation.vue';
 
 export default {
   name: 'CreateStudentForms',
@@ -99,39 +100,40 @@ export default {
   props:
   { 
     student: Object,
-  },
-  
+  },  
   componentes: {
 //    SucessOperation,
   },
-  data: () => ({
-    valid: false,
-    nameRules: [
-      v => !!v || 'Name is required',
-    ],
-    cpfRules:[
-      v => !!v || 'CPF is required',
-      v => (v && v.length >= 9) || 'CPF must be less than 9 characters',
-    ],
-    raRules:[
-      v => !!v || 'RA is required',
-      v => (v && v.length >= 9) || 'RA must be less than 9 characters',
-    ],
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
-    newStudent : {
-          id: null,
-          name : null,
-          cpf: null,
-          ra:null,
-          email:null,
-        },
-    success : false,
-    error : false,
-    mensageError:"",
-  }),
+  data () {
+    return {
+      valid: false,
+      nameRules: [
+        v => !!v || 'Name is required',
+      ],
+      cpfRules:[
+        v => !!v || 'CPF is required',
+        v => (v && v.length >= 9) || 'CPF must be less than 9 characters',
+      ],
+      raRules:[
+        v => !!v || 'RA is required',
+        v => (v && v.length >= 9) || 'RA must be less than 9 characters',
+      ],
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      newStudent : {
+            id: null,
+            name : null,
+            cpf: null,
+            ra:null,
+            email:null,
+          },
+      success : false,
+      error : false,
+      mensageError:"",
+    }
+  },
   computed : {
     editMode() {
       return this.student != null;
@@ -188,7 +190,7 @@ export default {
     },
     resetValidation () {
       this.$refs.form.resetValidation()
-      this.$router.push("/");
+      this.$router.push("/find-student");
     },
   },
 }

@@ -13,12 +13,13 @@
           </v-list-item-content>
         </v-list-item>
       </template>
-      <v-divider></v-divider>
-      <v-btn large width='100%' style="border-radius:0" class='elevation-6 justify-start'>ALUNOS</v-btn>
+
+      <menuBtn :label="menu1.label" :link="menu1.path" />
+
     </v-navigation-drawer>
 
     <v-main>
-      <v-container >
+      <v-container flex>
         <router-view/>            
       </v-container>
     </v-main>
@@ -26,26 +27,17 @@
 </template>
 
 <script>
-
+import menuBtn from './components/buttons/menuButton';
 export default {
   name: 'App',
 
     data: () => ({
+      menu1 : { label:'Alunos',path:'find-student'}
+  
     //
   }),
-  watch : {
-    $router() {
-      console.log(this.$router.name)
-    }
-
-  }
-    ,
-};
+  components :{
+    menuBtn,
+  },
+} 
 </script>
-
-<style >
-.main2
-{
-  border: #3E2723 darken-4 2px solid;
-}
-</style>
