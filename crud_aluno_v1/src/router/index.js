@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import FindStudent from '@/views/FindStudent.vue'
 import LandingPage from '@/views/LandingPage.vue'
+import PageNotFound from '@/views/PageNotFound.vue'
 
 
 Vue.use(VueRouter)
@@ -11,6 +12,9 @@ const routes = [
     path: '/',
     name: 'home',
     component: LandingPage
+  },
+  { path: "*",
+    component: PageNotFound 
   },
   {
     path: '/find-student',
