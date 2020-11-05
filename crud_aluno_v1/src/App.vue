@@ -14,6 +14,7 @@
         </v-list-item>
       </template>
       <v-divider></v-divider>
+      <v-btn large width='100%' style="border-radius:0" class='elevation-6 justify-start'>ALUNOS</v-btn>
     </v-navigation-drawer>
 
     <v-main>

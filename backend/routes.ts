@@ -1,5 +1,5 @@
 import {Router} from 'express';
-import StudentController from './src/controllers/StudentController';
+import StudentController from '@controllers/StudentController';
 
 const routes = Router();
 

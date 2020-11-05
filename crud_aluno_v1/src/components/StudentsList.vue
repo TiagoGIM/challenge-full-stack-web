@@ -74,7 +74,7 @@ export default {
        search: '',
        headers : [
         {
-          text: 'name',
+          text: 'Nome',
           align: 'start',
           sortable: false,
           value: 'name',
@@ -82,7 +82,12 @@ export default {
         { text: 'Email', value: 'email' },
         { text: 'RA', value: 'ra' },
         { text: 'CPF', value: 'cpf' },
-        { text: 'Ação', value: 'action' },
+        {
+          text: '',
+          sortable:false,
+          value: 'action',
+          align:'center', 
+        },
         ],
         users:[],
         deleteDialog : false,

@@ -31,7 +31,7 @@
       :counter="10"
       :rules="raRules"
       label="RA"
-      :readonly="editMode"
+      :disabled="editMode"
       placeholder="Informe o registro acadêmico"
       outlined
     ></v-text-field>
@@ -41,7 +41,7 @@
       :counter="9"
       :rules="cpfRules"
       label="CPF"
-      :readonly="editMode"
+      :disabled="editMode"
       placeholder="Informe o número do CPF"
       outlined
       required
@@ -106,7 +106,6 @@ export default {
   },
   data: () => ({
     valid: false,
-    editMode:false,
     nameRules: [
       v => !!v || 'Name is required',
     ],
@@ -133,21 +132,21 @@ export default {
     error : false,
     mensageError:"",
   }),
+  computed : {
+    editMode() {
+      return this.student != null;
+    }
+  },
   async created(){
 //prepear student for editing operation.
     if (this.student) {
-      this.newStudent.id = this.student.id;
-      this.newStudent.name = this.student.name;
-      this.newStudent.email = this.student.email;
-      this.newStudent.ra = this.student.ra;
-      this.newStudent.cpf = this.student.cpf;
-      this.editMode = true;
+      this.newStudent = this.student;
     }
   },
 
   methods: {
     saveStudent(){
-      this.editMode ? this.updateStedant() : this.createStudent() ;
+      this.editMode ? this.updateStudent() : this.createStudent();
     },
     createStudent () {      
       //this.$refs.form.validate()  

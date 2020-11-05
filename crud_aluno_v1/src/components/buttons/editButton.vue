@@ -12,7 +12,7 @@
         v-on="on"
         @click="editStudent"
         >
-          <v-icon left>
+          <v-icon >
             mdi-pencil
           </v-icon>
         </v-btn>

@@ -1,9 +1,9 @@
 import {Request,Response} from 'express';
 import { getRepository } from "typeorm";
-import studentSchema from '../models/schemas/studentSchema';
-import StudentEntity from "../models/StudentModel";
-import students_view from '../view/students_view';
-import studentView from '../view/students_view';
+import studentSchema from '@models/schemas/studentSchema';
+import StudentEntity from "@models/StudentModel";
+import students_view from '@view/students_view';
+import studentView from '@view/students_view';
 
 export default{
   async index(request:Request, response:Response){
