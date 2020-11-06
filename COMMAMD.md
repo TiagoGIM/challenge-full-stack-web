@@ -87,4 +87,4 @@ Todos os requisitos foram entregues.
 
 Toda a aplicação está funcionando em CI-CD na nuvem usando dois servições diferentes, o **HEROKU** para o banco de dados e API, e o **netliFy** que pode ser acessado neste endereço:
 [CLIKE AQUI PARA TESTAR](https://desafiogrupoa.netlify.app/)  
-
+[![Netlify Status](https://api.netlify.com/api/v1/badges/41b07752-08c5-4124-b852-07b420d4217b/deploy-status)](https://app.netlify.com/sites/desafiogrupoa/deploys)
