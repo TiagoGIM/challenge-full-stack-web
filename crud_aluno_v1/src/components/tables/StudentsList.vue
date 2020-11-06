@@ -45,9 +45,9 @@
 
 <script>
   import DataService from '@/services/DataService.js';
-  import deleteDialog from './dialogs/DeleteDialog.vue'
-  import deleteBtn from './buttons/deleteButton.vue'
-  import BtnEdit from './buttons/editButton.vue'
+  import deleteDialog from '@/components/dialogs/DeleteDialog.vue'
+  import deleteBtn from '@/components/buttons/deleteButton.vue'
+  import BtnEdit from '@/components/buttons/editButton.vue'
   import store from '@/store';
 
 export default {

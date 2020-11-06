@@ -8,9 +8,8 @@
 </template>
 
 <script>
-  import CreateStudentForms from '@/components/CreateStudentForms.vue'
-  import layoutPages from '@/views/layoutPage'
-
+  import CreateStudentForms from '@/components/forms/CreateStudentForms.vue'
+  import layoutPages from '@/components/layouts/layoutPage'
   export default {
     name: 'Register',
     data(){

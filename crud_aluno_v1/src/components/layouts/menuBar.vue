@@ -42,7 +42,7 @@
 
 <script>
 
-import menuBtn from './buttons/menuButton';
+import menuBtn from '../buttons/menuButton';
 
   export default {
       name:'menuBar',
