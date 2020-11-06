@@ -1,20 +1,25 @@
 <template>
     <v-navigation-drawer app
-    color="grey lighten-2"
-    floating
+      color="grey lighten-4"
+      floating
     >
-      <v-list-item>
-        <v-list-item-content>
-          <v-sheet class="d-flex"
-          color="grey lighten-3">
-          <v-list-item-title class="title">
-            <router-link to='/' active-class="active" >MÓDULO ACADÊMICO</router-link>
-          </v-list-item-title>
-          </v-sheet>
-        </v-list-item-content>
-      </v-list-item>
+    <v-sheet 
+      class="home-div"
+      height=50
+      color="deep-purple"
+      width=100%
+    >
+      <v-list-item link>
+        <v-list-item-content>          
+          <v-list-item-title class="title" color='white'>
+            <router-link to='/' 
+            tag="h4" 
+            >MODULO ACADÊMICO</router-link>
 
-      <v-divider></v-divider>
+          </v-list-item-title>          
+        </v-list-item-content>        
+      </v-list-item>
+    </v-sheet>
 
       <v-list
         dense
@@ -27,17 +32,13 @@
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-content>        
+          <v-list-item-content> 
             <menuBtn :label="item.title" :link="item.path"/>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 </template>
-
-
-
-
 
 <script>
 
@@ -60,5 +61,9 @@ import menuBtn from './buttons/menuButton';
   }
 </script>
 
+<style scoped>
+h4 {
+    color:white;
+} 
 
- 
+</style>}

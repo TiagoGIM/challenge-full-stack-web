@@ -1,13 +1,13 @@
 <template>
 <div>
   <v-alert
-  type ='success'
-  v-if='success'
-  dismissible
+    type ='purple'
+    v-if='success'
+    dismissible
   >Cadastro realizado !
   </v-alert>
   <v-alert
-  type ='error'
+  type ='pink accent-4'
   v-if='error'
   dismissible
   >Dados inválidos : {{mensageError}}
@@ -64,13 +64,12 @@
     <v-btn
       :disabled="!valid"
       fab
-      color="success"
+      color="indigo"
       large
-      
       @click="saveStudent"
     >
       <v-icon 
-      color = "deep-green lighten-5"
+      color = "indigo lighten-5"
       >mdi-content-save</v-icon>
     </v-btn>
 
@@ -79,7 +78,7 @@
       fab
       dark
       large
-      color="red lighten-1"
+      color="purple accent-4"
       outlined
       @click="resetValidation"
     >
@@ -88,6 +87,13 @@
   
   </v-card>
   </v-form>
+  <v-snackbar 
+    v-model="successUpdate "
+    :timeout="timeout"
+    >
+      PERFIL ATUALIZADO    !
+      </v-snackbar>
+
 </div>
 </template>
 
@@ -101,9 +107,6 @@ export default {
   { 
     student: Object,
   },  
-  componentes: {
-//    SucessOperation,
-  },
   data () {
     return {
       valid: false,
@@ -129,15 +132,19 @@ export default {
             ra:null,
             email:null,
           },
+      timeout:4000,
       success : false,
       error : false,
       mensageError:"",
+      successUpdate:false,
+
+
     }
   },
   computed : {
     editMode() {
       return this.student != null;
-    }
+    },
   },
   async created(){
 //prepear student for editing operation.
@@ -155,6 +162,7 @@ export default {
         DataService.create(this.newStudent).then(res => {
           console.log(res.data);
           this.success=true;
+          setTimeout(() => this.success = false , 10000);
         })
         .catch(err => {
           this.error =true;
@@ -177,8 +185,8 @@ export default {
     updateStudent(){
       DataService.update(this.newStudent.id, this.newStudent).then(response => {
           console.log(response.data);
-          this.success=true;
-          this.$router.push("/");
+          this.successUpdate=true;
+          setTimeout(() => this.$router.push("/find-student"), 5000);
         })
         .catch(err => {
           console.log(err);

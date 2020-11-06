@@ -22,7 +22,7 @@
             <v-btn
             @click="hide"
             outlined
-            color="teal darken-4"
+            color="deep-purple"
             style="border-radius:0"
             >
               <v-icon>mdi-arrow-left</v-icon>
@@ -69,7 +69,7 @@ export default{
 <style scoped>
 .my-btn-delete{
   margin-left:10px;
-  color:#FF5722;
+  color:#C51162;
   border-radius:0
 }
 </style>

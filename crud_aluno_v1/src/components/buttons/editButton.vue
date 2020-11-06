@@ -7,12 +7,14 @@
       <template v-slot:activator="{ on, attrs }">
         <v-btn
         tile
-        color="success"
+        color="deep-purple"
         v-bind="attrs"
         v-on="on"
         @click="editStudent"
         >
-          <v-icon >
+          <v-icon
+          color = "indigo lighten-5"
+          >
             mdi-pencil
           </v-icon>
         </v-btn>

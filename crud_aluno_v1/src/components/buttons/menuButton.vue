@@ -1,11 +1,14 @@
 <template>
   <v-btn
-    color="green lighten-4"
-    width='100%' 
     @click="clickBtn(link)" 
-    style="border-radius:0" 
-    class='elevation-6 justify-start'
-    >
+    class='elevation-2 justify-start'
+    color="purple darken-4"
+    outlined
+    tile
+    width=100%
+    elevation=2
+    sticky
+      >
     <v-icon>{{iconBadge}}</v-icon>
     {{label}}
   </v-btn>
@@ -28,10 +31,19 @@ export default {
        // But print any other errors to the console
         console.error(err);
       }
-    })
-
-      
+    });     
     }
   }    
 }
 </script>
+
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@600&display=swap');
+h2{
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 20px;
+}
+
+</style>
+

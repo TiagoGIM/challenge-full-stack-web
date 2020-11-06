@@ -2,15 +2,15 @@
   <v-row
     align="center"
     justify="space-around"
-    outlined
   >
   <v-tooltip 
   left
   >
     <template v-slot:activator="{ on, attrs }">
       <v-btn
+        outlined
         tile
-        color="error"
+        color="deep-purple"
         v-bind="attrs"
         v-on="on"
         @click="deleteEvent"

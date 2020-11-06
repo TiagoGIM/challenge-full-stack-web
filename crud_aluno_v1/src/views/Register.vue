@@ -1,7 +1,9 @@
 <template>
-  <v-container>
+  <v-container flex>
   <layoutPages :title ="title"/>
-    <CreateStudentForms :student="student"/>
+    <v-sheet max-width=680 center>
+      <CreateStudentForms :student="student"/>
+    </v-sheet>
   </v-container>
 </template>
 

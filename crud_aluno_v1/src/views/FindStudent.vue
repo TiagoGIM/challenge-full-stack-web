@@ -13,7 +13,7 @@
     name: 'FindStudent',
     data(){
       return {
-      title:"Consulta de alunos",
+      title:"CONSULTA DE ALUNOS",
       }
     },
     components: {
