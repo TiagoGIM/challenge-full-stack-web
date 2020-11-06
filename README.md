@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/41b07752-08c5-4124-b852-07b420d4217b/deploy-status)](https://app.netlify.com/sites/desafiogrupoa/deploys)
+
 GrupoA Educação - Full Stack Web Developer
 ===================
 

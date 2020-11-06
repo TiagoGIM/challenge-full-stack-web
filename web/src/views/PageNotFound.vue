@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import layoutPages from '@/views/layoutPage'
+  import layoutPages from '@/components/layouts/layoutPage'
 
   export default {
     name: 'pageNotFound',

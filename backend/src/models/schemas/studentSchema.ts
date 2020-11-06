@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-
+/* this object will be used for check if the post from client is a valid object.*/
 const studentSchema = Yup.object().shape({
     email: Yup
         .string()

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import menuBar from './components/menuBar.vue'
+import menuBar from '@/components/layouts/menuBar.vue'
 export default {
   name: 'App',
   components :{
