@@ -1,23 +1,8 @@
 <template>
   <v-app>
-    <v-navigation-drawer
-    app
-    color="green"
-    >
-      <template v-slot:prepend>
-        <v-list-item >
-          <v-list-item-content>
-            <div class="text-center pt-5" style = "color : white">
-              <h4>MÓDULO ACADÊMICO</h4>
-            </div>
-          </v-list-item-content>
-        </v-list-item>
-      </template>
-      <v-divider></v-divider>
-    </v-navigation-drawer>
-
+      <menuBar/>
     <v-main>
-      <v-container >
+      <v-container flex>
         <router-view/>            
       </v-container>
     </v-main>
@@ -25,26 +10,11 @@
 </template>
 
 <script>
-
+import menuBar from './components/menuBar.vue'
 export default {
   name: 'App',
-
-    data: () => ({
-    //
-  }),
-  watch : {
-    $router() {
-      console.log(this.$router.name)
-    }
-
-  }
-    ,
-};
+  components :{
+    menuBar,
+  },
+} 
 </script>
-
-<style >
-.main2
-{
-  border: #3E2723 darken-4 2px solid;
-}
-</style>

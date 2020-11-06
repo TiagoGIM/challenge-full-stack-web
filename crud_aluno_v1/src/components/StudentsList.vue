@@ -1,5 +1,5 @@
   <template>
-  <v-card elevation="1">
+  <v-card elevation="1"  >
     <v-card-title>
       <v-text-field
         v-model="search"
@@ -19,7 +19,6 @@
       >Cadastrar Aluno
         <v-icon > mdi-account-plus</v-icon>
       </v-btn> 
-
     </v-card-title>
 
     <v-data-table
@@ -29,52 +28,43 @@
       :search="search"
     >
       <template v-slot:item.action="{item}">
-        <BtnEdit :student="item" /><!-- <BtnDelStudant key="{{item.id}}"/> -->
-        <BtnDelete :student="item"/> 
+        <BtnEdit :student="item" />
+        <deleteBtn :student="item"/> 
       </template>   
     </v-data-table>
+    
+    <deleteDialog
+    :hidded='showDeleteDialog' 
+    :btnClickHandler="removeStudent"
+    :student="student"
+    @deleteDialog-hide-event="abortDeleteAndClear"
+    />
 
-    <v-dialog width="600"  v-model="showof">
-      <v-card width="600">
-          <v-card-text>
-            <h2>Deseja excluir o Aluno: </h2>
-            <h3>Nome: {{student.name}} </h3>
-            <h2> e as informações : </h2>
-            <h4> Email : {{student.email}} </h4>
-            <h4> CPF : {{student.cpf}} </h4>
-            <h4>Registro Acadêmico: {{student.ra}} </h4>
-            <h2>Do sistema </h2>
-          </v-card-text>
-          <v-card-actions>
-              <v-btn @click="abort">CANCELAR</v-btn>
-              <v-btn @click="removeStudent">DELETAR</v-btn>
-          </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-card>
 </template>
 
 <script>
   import DataService from '@/services/DataService.js';
-  import BtnDelete from './buttons/deleteButton.vue'
+  import deleteDialog from './dialogs/DeleteDialog.vue'
+  import deleteBtn from './buttons/deleteButton.vue'
   import BtnEdit from './buttons/editButton.vue'
   import store from '@/store';
 
 export default {
   name: 'StudentList',
     components: {
-    BtnDelete,
+    deleteBtn,
+    deleteDialog,
     BtnEdit,
     },
   data()
   {
      return {
-       sharedData : store.state.deleteStudent,
-       showof:false,
+       showDeleteDialog:false,
        search: '',
        headers : [
         {
-          text: 'name',
+          text: 'Nome',
           align: 'start',
           sortable: false,
           value: 'name',
@@ -82,7 +72,12 @@ export default {
         { text: 'Email', value: 'email' },
         { text: 'RA', value: 'ra' },
         { text: 'CPF', value: 'cpf' },
-        { text: 'Ação', value: 'action' },
+        {
+          text: '',
+          sortable:false,
+          value: 'action',
+          align:'center', 
+        },
         ],
         users:[],
         deleteDialog : false,
@@ -104,7 +99,7 @@ export default {
     },
     removeStudent() {
         DataService.delete(this.student.id).then(() => {
-          this.showof=false
+          this.showDeleteDialog=false
           this.getList()
         })
         .catch(err=>{
@@ -123,8 +118,8 @@ export default {
       })
       
     },
-    abort(){
-      this.showof = false;
+    abortDeleteAndClear(){
+      this.showDeleteDialog = false;
       this.student = {
           id: null,
           name : null,
@@ -140,11 +135,11 @@ export default {
       const trigger = mutation.type;
       const state = mutation.payload;
       if(trigger==='deleteAbort'){
-        console.log(this.sharedData);
+        console.log(trigger);
       }
       if(trigger==='deleteStudent'){
         this.student = state.student;
-        this.showof=state.deleteAction;
+        this.showDeleteDialog=state.deleteAction;
       }
     });
     this.getList();

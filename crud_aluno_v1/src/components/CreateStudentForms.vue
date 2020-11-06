@@ -1,13 +1,13 @@
 <template>
 <div>
   <v-alert
-  type ='success'
-  v-if='success'
-  dismissible
+    type ='purple'
+    v-if='success'
+    dismissible
   >Cadastro realizado !
   </v-alert>
   <v-alert
-  type ='error'
+  type ='pink accent-4'
   v-if='error'
   dismissible
   >Dados inválidos : {{mensageError}}
@@ -31,7 +31,7 @@
       :counter="10"
       :rules="raRules"
       label="RA"
-      :readonly="editMode"
+      :disabled="editMode"
       placeholder="Informe o registro acadêmico"
       outlined
     ></v-text-field>
@@ -41,7 +41,7 @@
       :counter="9"
       :rules="cpfRules"
       label="CPF"
-      :readonly="editMode"
+      :disabled="editMode"
       placeholder="Informe o número do CPF"
       outlined
       required
@@ -62,36 +62,43 @@
    flat
    >
     <v-btn
-    
+      :disabled="!valid"
+      fab
+      color="indigo"
+      large
+      @click="saveStudent"
+    >
+      <v-icon 
+      color = "indigo lighten-5"
+      >mdi-content-save</v-icon>
+    </v-btn>
+
+    <v-btn
+      class="mr-6"
       fab
       dark
       large
-      color="red lighten-1"
+      color="purple accent-4"
       outlined
       @click="resetValidation"
     >
       <v-icon>mdi-close</v-icon>      
     </v-btn>
-    <v-btn
-      :disabled="!valid"
-      fab
-      color="success"
-      large
-      class="mr-6"
-      @click="saveStudent"
-    >
-      <v-icon 
-      color = "deep-green lighten-5"
-      >mdi-content-save</v-icon>
-    </v-btn>
+  
   </v-card>
   </v-form>
+  <v-snackbar 
+    v-model="successUpdate "
+    :timeout="timeout"
+    >
+      PERFIL ATUALIZADO    !
+      </v-snackbar>
+
 </div>
 </template>
 
 <script>
 import DataService from '@/services/DataService.js';
-//import SucessOperation from './dialogs/SucessOperation.vue';
 
 export default {
   name: 'CreateStudentForms',
@@ -99,61 +106,63 @@ export default {
   props:
   { 
     student: Object,
+  },  
+  data () {
+    return {
+      valid: false,
+      nameRules: [
+        v => !!v || 'Name is required',
+      ],
+      cpfRules:[
+        v => !!v || 'CPF is required',
+        v => (v && v.length >= 9) || 'CPF must be less than 9 characters',
+      ],
+      raRules:[
+        v => !!v || 'RA is required',
+        v => (v && v.length >= 9) || 'RA must be less than 9 characters',
+      ],
+      emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      newStudent : {
+            id: null,
+            name : null,
+            cpf: null,
+            ra:null,
+            email:null,
+          },
+      timeout:4000,
+      success : false,
+      error : false,
+      mensageError:"",
+      successUpdate:false,
+
+
+    }
   },
-  
-  componentes: {
-//    SucessOperation,
+  computed : {
+    editMode() {
+      return this.student != null;
+    },
   },
-  data: () => ({
-    valid: false,
-    editMode:false,
-    nameRules: [
-      v => !!v || 'Name is required',
-    ],
-    cpfRules:[
-      v => !!v || 'CPF is required',
-      v => (v && v.length >= 9) || 'CPF must be less than 9 characters',
-    ],
-    raRules:[
-      v => !!v || 'RA is required',
-      v => (v && v.length >= 9) || 'RA must be less than 9 characters',
-    ],
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    ],
-    newStudent : {
-          id: null,
-          name : null,
-          cpf: null,
-          ra:null,
-          email:null,
-        },
-    success : false,
-    error : false,
-    mensageError:"",
-  }),
   async created(){
 //prepear student for editing operation.
     if (this.student) {
-      this.newStudent.id = this.student.id;
-      this.newStudent.name = this.student.name;
-      this.newStudent.email = this.student.email;
-      this.newStudent.ra = this.student.ra;
-      this.newStudent.cpf = this.student.cpf;
-      this.editMode = true;
+      this.newStudent = this.student;
     }
   },
 
   methods: {
     saveStudent(){
-      this.editMode ? this.updateStedant() : this.createStudent() ;
+      this.editMode ? this.updateStudent() : this.createStudent();
     },
     createStudent () {      
       //this.$refs.form.validate()  
         DataService.create(this.newStudent).then(res => {
           console.log(res.data);
           this.success=true;
+          setTimeout(() => this.success = false , 10000);
         })
         .catch(err => {
           this.error =true;
@@ -176,8 +185,8 @@ export default {
     updateStudent(){
       DataService.update(this.newStudent.id, this.newStudent).then(response => {
           console.log(response.data);
-          this.success=true;
-          this.$router.push("/");
+          this.successUpdate=true;
+          setTimeout(() => this.$router.push("/find-student"), 5000);
         })
         .catch(err => {
           console.log(err);
@@ -189,7 +198,7 @@ export default {
     },
     resetValidation () {
       this.$refs.form.resetValidation()
-      this.$router.push("/");
+      this.$router.push("/find-student");
     },
   },
 }
