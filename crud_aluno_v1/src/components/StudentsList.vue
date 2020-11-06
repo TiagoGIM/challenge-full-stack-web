@@ -101,6 +101,7 @@ export default {
         DataService.delete(this.student.id).then(() => {
           this.showDeleteDialog=false
           this.getList()
+          console.log(process.env.VUE_APP_NOT_SECRET_CODE);
         })
         .catch(err=>{
           alert("some error",err);
