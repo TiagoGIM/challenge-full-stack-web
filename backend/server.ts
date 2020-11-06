@@ -6,7 +6,7 @@ import './src/database/connections';
 import routes from './routes'
 
 const app = express();
-const port = 8084; // default port to listen
+const port =  process.env.PORT || 8084;
 
 
 app.use(cors());
@@ -34,7 +34,5 @@ app.delete("/studant/:id", (req: Request, res: Response) => {
 // start express server
 // start the Express server
 app.use(errorHandler)
-app.listen( port, () => {
-    console.log( `server started at http://localhost:${ port }` );
-} );
+app.listen( port);
 
