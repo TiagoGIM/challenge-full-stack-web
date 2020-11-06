@@ -1,5 +1,6 @@
 import axios from 'axios';
-const endPointAPI = 'http://localhost:8084/';
+const endPointAPI = process.env.APP_URL_API;
+
 
 
 export default axios.create({
