@@ -6,8 +6,8 @@
 </template>
 
 <script>
-  import StudentList from '@/components/StudentsList.vue'
-  import layoutPages from '@/views/layoutPage'
+  import StudentList from '@/components/tables/StudentsList.vue'
+  import layoutPages from '@/components/layouts/layoutPage'
 
   export default {
     name: 'FindStudent',
