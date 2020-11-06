@@ -109,15 +109,12 @@ export default {
     },
     getList(){
       DataService.getAll().then(res => {
-
         this.users= res.data
-
         console.log(this.users)
       })
       .catch(err=>{
         console.log(err);
-      })
-      
+      })      
     },
     abortDeleteAndClear(){
       this.showDeleteDialog = false;

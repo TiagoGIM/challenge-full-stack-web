@@ -1,13 +1,16 @@
 <template>
 <div>
+  
   <v-alert
-    type ='purple'
+    type ='success'
+    color='purple'
     v-if='success'
     dismissible
   >Cadastro realizado !
   </v-alert>
   <v-alert
-  type ='pink accent-4'
+  color='pink accent-4'
+  type ='error'
   v-if='error'
   dismissible
   >Dados inválidos : {{mensageError}}
@@ -27,18 +30,18 @@
     ></v-text-field>
 
     <v-text-field
+      v-mask="('XXXX-XXXX')"
       v-model="newStudent.ra"
-      :counter="10"
       :rules="raRules"
       label="RA"
       :disabled="editMode"
       placeholder="Informe o registro acadêmico"
       outlined
     ></v-text-field>
-
+   
     <v-text-field
+      v-mask="('###.###.###-##')" 
       v-model="newStudent.cpf"
-      :counter="9"
       :rules="cpfRules"
       label="CPF"
       :disabled="editMode"
@@ -91,14 +94,15 @@
     v-model="successUpdate "
     :timeout="timeout"
     >
-      PERFIL ATUALIZADO    !
-      </v-snackbar>
-
+      PERFIL ATUALIZADO,Voltando para tela inicial    !
+      
+  </v-snackbar>
 </div>
 </template>
 
 <script>
 import DataService from '@/services/DataService.js';
+//import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
 
 export default {
   name: 'CreateStudentForms',
@@ -106,24 +110,28 @@ export default {
   props:
   { 
     student: Object,
+  },
+  components:{
+  //  'PulseLoader': PulseLoader
   },  
   data () {
     return {
+      sizeLoader:"small",
       valid: false,
       nameRules: [
-        v => !!v || 'Name is required',
+        v => !!v || 'Nome do aluno necessário', 
       ],
       cpfRules:[
-        v => !!v || 'CPF is required',
-        v => (v && v.length >= 9) || 'CPF must be less than 9 characters',
+        v => !!v || 'CPF é necessário',
+        v => (v && v.length >= 14) || 'CPF precisa ter 9 dígitos ',
       ],
       raRules:[
         v => !!v || 'RA is required',
-        v => (v && v.length >= 9) || 'RA must be less than 9 characters',
+        v => (v && v.length >= 9) || 'Registro Acadêmico inválido',
       ],
       emailRules: [
         v => !!v || 'E-mail is required',
-        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+        v => /.+@.+\..+/.test(v) || 'E-mail inválido',
       ],
       newStudent : {
             id: null,
@@ -137,8 +145,6 @@ export default {
       error : false,
       mensageError:"",
       successUpdate:false,
-
-
     }
   },
   computed : {
@@ -162,12 +168,11 @@ export default {
         DataService.create(this.newStudent).then(res => {
           console.log(res.data);
           this.success=true;
-          setTimeout(() => this.success = false , 10000);
+          setTimeout(() => this.success = false , 7000);
         })
         .catch(err => {
-          this.error =true;
-          //create a handler with an approach for de error.
-          
+         
+          //TODO : create a handler with an approach for de error.          
           let errorsRequest = err.response.data.errors;
           console.log(errorsRequest);
           let arrayError = [''];
@@ -176,6 +181,7 @@ export default {
           this.mensageError = arrayError.reduce((current, next, idx) => {
             return idx == 0 ? current : next + ', ' + current;
           },'');
+          this.error =true;
           console.log(this.mensageError)
         });
 
