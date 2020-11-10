@@ -4,13 +4,12 @@
     justify="space-around"
   >
     <v-tooltip left>
-      <template v-slot:activator="{ on, attrs }">
+      <template v-slot:activator="{ attrs }">
         <v-btn
         tile
         color="deep-purple"
         v-bind="attrs"
-        v-on="on"
-        @click="editStudent"
+        v-on="{click:editStudent}"
         >
           <v-icon
           color = "indigo lighten-5"
@@ -42,9 +41,6 @@
           params : { student: this.student }
         });
       }
-    },
-    created(){
-      console.log(this.student)
     },
   }
 
