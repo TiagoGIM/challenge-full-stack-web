@@ -39,7 +39,13 @@
         this.$router.push({
           name: 'Edit',
           params : { student: this.student }
-        });
+        }).catch(err => { 
+        // Ignore the vuex err regarding  navigating to the page they are already on.
+          if (err.name != "NavigationDuplicated") {
+        // But print any other errors to the console
+            console.error(err);
+            }
+          });
       }
     },
   }
