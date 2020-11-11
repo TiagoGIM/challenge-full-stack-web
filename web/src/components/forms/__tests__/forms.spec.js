@@ -4,7 +4,8 @@ import studentForms from '@/components/forms/CreateStudentForms.vue'
 import { mount,createLocalVue } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 import 'regenerator-runtime';
-import {expect} from 'chai'
+import {expect} from 'chai';
+
 
 let mock_student = {
   name:'nome',

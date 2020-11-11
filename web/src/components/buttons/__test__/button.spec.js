@@ -81,8 +81,6 @@ describe('editBtn.vue' ,() => {
     it('send stundent data to edit page?', async () => {
       wrapper.find('.v-btn').trigger('click')
       await wrapper.vm.$nextTick()
-      console.log(wrapper.$route)     
-
     });
   });//end editbtn
 
