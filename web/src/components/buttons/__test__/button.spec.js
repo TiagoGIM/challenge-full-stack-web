@@ -5,7 +5,6 @@ import editButton from '@/components/buttons/editButton.vue'
 import Vuetify from 'vuetify';
 import VueRouter from 'vue-router'
 import { mount,createLocalVue } from '@vue/test-utils';
-
 import 'regenerator-runtime';
 import { expect } from 'chai';
 
@@ -16,22 +15,24 @@ let mock_student = {
     cpf:'123456789'
   };
 
+const creatWrapper = (component , options= {}) => {
+  const localVue = createLocalVue()
+  localVue.use(VueRouter)
+  const vuetify = new Vuetify()
+  return mount(component, {
+    localVue,
+    vuetify,
+    ...options,
+  });
+}
+
 describe('deleteBtn.vue' ,() => {
   let wrapper
-  const localVue = createLocalVue()
-
   beforeAll( () => {
-    let vuetify = new Vuetify()
-    wrapper = mount(deleteBtn, {
-      localVue,
-      vuetify,
-      propsData: {
-        student: mock_student,
-      },
-    })
+    wrapper = creatWrapper(deleteBtn,{propsData: {student: mock_student}})
   });
 
-  it( "it's a vue instance?", () =>{
+  test( "it's a vue instance?", () =>{
     expect(wrapper.exists()).to.be.true;
   });
 
@@ -45,12 +46,10 @@ describe('deleteBtn.vue' ,() => {
     expect(wrapper.vm.del).to.be.true;
   });
 
-});
+}); //end deleteBtn
 
 describe('editBtn.vue' ,() => {
     let wrapper
-    const localVue = createLocalVue()
-    localVue.use(VueRouter)
     const router = new VueRouter({routes: [
       {
         path: '/register/:student',
@@ -59,15 +58,7 @@ describe('editBtn.vue' ,() => {
     ]})
   
     beforeAll( () => {
-      let vuetify = new Vuetify()
-      wrapper = mount(editButton, {
-        localVue,
-        router,
-        vuetify,
-        propsData: {
-          student: mock_student
-        },
-      });    
+      wrapper = creatWrapper( editButton,{propsData: {student: mock_student},router})
     });
 
     it( "it's a vue instance?", () =>{
@@ -82,6 +73,4 @@ describe('editBtn.vue' ,() => {
       wrapper.find('.v-btn').trigger('click')
       await wrapper.vm.$nextTick()
     });
-  });//end editbtn
-
-  
+  });//end editbtn  
