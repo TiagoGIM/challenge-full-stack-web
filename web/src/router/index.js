@@ -40,3 +40,8 @@ const router = new VueRouter({
 })
 
 export default router
+
+//Factory for testing 
+export const createRouter = () => {
+  return new VueRouter({ routes })
+}

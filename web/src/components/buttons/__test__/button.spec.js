@@ -7,6 +7,7 @@ import VueRouter from 'vue-router'
 import { mount,createLocalVue } from '@vue/test-utils';
 import 'regenerator-runtime';
 import { expect } from 'chai';
+import {createRouter} from '@/router'
 
 let mock_student = {
     name:'nome',
@@ -27,50 +28,43 @@ const creatWrapper = (component , options= {}) => {
 }
 
 describe('deleteBtn.vue' ,() => {
-  let wrapper
+  let wrapperDeleteBtn
   beforeAll( () => {
-    wrapper = creatWrapper(deleteBtn,{propsData: {student: mock_student}})
+    wrapperDeleteBtn = creatWrapper(deleteBtn,{propsData: {student: mock_student}})
   });
 
-  test( "it's a vue instance?", () =>{
-    expect(wrapper.exists()).to.be.true;
+  it( "it's a vue instance?", () =>{
+    expect(wrapperDeleteBtn.exists()).to.be.true;
   });
 
   it('have a v-btn?', () => {
-    expect(wrapper.find('.v-btn').exists()).to.be.true;
+    expect(wrapperDeleteBtn.find('.v-btn').exists()).to.be.true;
   });
 
   it('set a del flag to true when is clicked?', async ()=>{
-    wrapper.find('.v-btn').trigger('click')
-    await wrapper.vm.$nextTick() 
-    expect(wrapper.vm.del).to.be.true;
+    wrapperDeleteBtn.find('.v-btn').trigger('click')
+    await wrapperDeleteBtn.vm.$nextTick() 
+    expect(wrapperDeleteBtn.vm.del).to.be.true;
   });
-
 }); //end deleteBtn
 
 describe('editBtn.vue' ,() => {
-    let wrapper
-    const router = new VueRouter({routes: [
-      {
-        path: '/register/:student',
-        name: 'Edit',
-        props: true},
-    ]})
-  
+    let wrapperEditBtn
+    const router = createRouter()  
     beforeAll( () => {
-      wrapper = creatWrapper( editButton,{propsData: {student: mock_student},router})
+      wrapperEditBtn = creatWrapper( editButton,{ router,propsData: {student: mock_student} })
     });
 
     it( "it's a vue instance?", () =>{
-      expect(wrapper.exists()).to.be.true;
+      expect(wrapperEditBtn.exists()).to.be.true;
     });
   
     it('have a v-btn?', () => {
-      expect(wrapper.find('.v-btn').exists()).to.be.true;
+      expect(wrapperEditBtn.find('.v-btn').exists()).to.be.true;
     });
   
     it('send stundent data to edit page?', async () => {
-      wrapper.find('.v-btn').trigger('click')
-      await wrapper.vm.$nextTick()
+      wrapperEditBtn.find('.v-btn').trigger('click')
+      await wrapperEditBtn.vm.$nextTick()
     });
   });//end editbtn  
