@@ -4,13 +4,12 @@
     justify="space-around"
   >
     <v-tooltip left>
-      <template v-slot:activator="{ on, attrs }">
+      <template v-slot:activator="{ attrs }">
         <v-btn
         tile
         color="deep-purple"
         v-bind="attrs"
-        v-on="on"
-        @click="editStudent"
+        v-on="{click:editStudent}"
         >
           <v-icon
           color = "indigo lighten-5"
@@ -40,11 +39,14 @@
         this.$router.push({
           name: 'Edit',
           params : { student: this.student }
-        });
+        }).catch(err => { 
+        // Ignore the vuex err regarding  navigating to the page they are already on.
+          if (err.name != "NavigationDuplicated") {
+        // But print any other errors to the console
+            console.error(err);
+            }
+          });
       }
-    },
-    created(){
-      console.log(this.student)
     },
   }
 

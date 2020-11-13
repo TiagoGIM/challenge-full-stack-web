@@ -6,14 +6,13 @@
   <v-tooltip 
   left
   >
-    <template v-slot:activator="{ on, attrs }">
+    <template v-slot:activator="{ attrs }">
       <v-btn
         outlined
         tile
         color="deep-purple"
         v-bind="attrs"
-        v-on="on"
-        @click="deleteEvent"
+        v-on="{click:deleteEvent}"
       >
         <v-icon>mdi-account-remove</v-icon>
       </v-btn>
@@ -29,6 +28,11 @@ import store from '@/store'
 
 export default{
   name:'deleteBtn',
+  data(){
+    return {
+      del:false
+    }
+  },
   props:
   { 
     student: Object,
@@ -38,12 +42,16 @@ export default{
   },
   methods:{
     deleteEvent(){
+
+      this.del = true;
       const forDelete = {      
         student : this.student,
-        deleteAction : true,
+        deleteAction : this.del,
       }
       //trigger a event in the store three
       store.commit('deleteStudent',forDelete);
+      //this event allow unit test about props
+      //this.$emit('deleteStudent',{...this.student});
     }
   }
 }
